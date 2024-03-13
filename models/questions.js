@@ -9,4 +9,4 @@ quizDate: String,
 
 })
 
-module.exports.Questions = mongoose.model('Questions', questionsSchema)
+module.exports.Question = mongoose.model('Question', questionsSchema);

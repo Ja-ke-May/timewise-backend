@@ -20,7 +20,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post('/leaderboard', async (req, res) => {
+app.post('/leaderboard', async (req, res) => {  
     const { quizType, quizDate, userName, totalScore } = req.body;
   
     try {
@@ -52,7 +52,7 @@ app.post('/leaderboard', async (req, res) => {
     }
 });
 
-app.post('/question', async (req, res) => {
+app.post('/questions', async (req, res) => {
     const { quizType, quizDate, question, options, correctAnswer } = req.body;
   
     try {
@@ -73,6 +73,18 @@ app.post('/question', async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
+
+  app.get('/questions', async (req, res) => {
+    try {
+      const { quizType, quizDate } = req.query;
+      const questionsData = await Question.find({ quizType, quizDate });
+      res.status(200).json(questionsData);
+    } catch (error) {
+      console.error('Error retrieving questions data:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
