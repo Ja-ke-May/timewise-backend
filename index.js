@@ -21,12 +21,13 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/leaderboard', async (req, res) => {  
-    const { quizType, quizDate, userName, totalScore } = req.body;
+    const { quizType, quizDate, dateQuizTaken, userName, totalScore } = req.body;
   
     try {
       const leaderboardEntry = new Leaderboard({
         quizType,
         quizDate,
+        dateQuizTaken,
         userName,
         totalScore,
       });
