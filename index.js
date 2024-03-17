@@ -20,34 +20,34 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post('/leaderboard', async (req, res) => {  
-    const { quizType, quizDate, dailyLeaderboardDate, userName, totalScore } = req.body;
-  
-    try {
+app.post('/leaderboard', async (req, res) => {
+  const { quizType, quizDate, dateQuizTaken, userName, totalScore } = req.body;
+
+  try {
       const leaderboardEntry = new Leaderboard({
-        quizType,
-        quizDate,
-        dailyLeaderboardDate,
-        userName,
-        totalScore,
+          quizType,
+          quizDate,
+          dateQuizTaken,
+          userName,
+          totalScore,
       });
 
       await leaderboardEntry.save();
-  
+
       console.log('Leaderboard data saved successfully');
       res.status(201).send('Leaderboard data saved successfully');
-    } catch (error) {
+  } catch (error) {
       console.error('Error saving leaderboard data:', error);
       res.status(500).send('Internal Server Error');
-    }
-  });
+  }
+});
 
 app.get('/leaderboard', async (req, res) => {
   try {
-    const { quizType, quizDate, dailyLeaderboardDate } = req.query;
-    const questionsData = await Question.find({ quizType, quizDate, dailyLeaderboardDate });
+    const { quizType, quizDate, dateQuizTaken } = req.query;
+    const questionsData = await Question.find({ quizType, quizDate, dateQuizTaken });
     res.status(200).json(questionsData);
-    console.log(dailyLeaderboardDate)
+    console.log(dateQuizTaken)
   } catch (error) {
     console.error('Error retrieving questions data:', error);
     res.status(500).send('Internal Server Error');
