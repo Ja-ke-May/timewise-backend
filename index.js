@@ -44,8 +44,19 @@ app.post('/leaderboard', async (req, res) => {
 
   app.get('/leaderboard', async (req, res) => {
     try {
-      const { quizType, quizDate } = req.query;
-      const leaderboardData = await Leaderboard.find({ quizType, quizDate });
+      const { quizType } = req.query;
+      const leaderboardData = await Leaderboard.find({ quizType });
+      res.status(200).json(leaderboardData);
+    } catch (error) {
+      console.error('Error retrieving leaderboard data:', error);
+      res.status(500).send('Internal Server Error');
+    }
+});
+
+  app.get('/leaderboard', async (req, res) => {
+    try {
+      const { quizType, quizDate, dateQuizTaken } = req.query;
+      const leaderboardData = await Leaderboard.find({ quizType, quizDate, dateQuizTaken });
       res.status(200).json(leaderboardData);
     } catch (error) {
       console.error('Error retrieving leaderboard data:', error);
