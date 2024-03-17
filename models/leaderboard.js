@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const leaderboardSchema = mongoose.Schema({
 quizType: String,
 quizDate: String,
-dateQuizTaken: Date,
+dateQuizTaken: String,
   userName: String,
   totalScore: Number,
 
