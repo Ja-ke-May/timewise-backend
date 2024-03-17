@@ -21,13 +21,13 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/leaderboard', async (req, res) => {  
-    const { quizType, quizDate, dateQuizTaken, userName, totalScore } = req.body;
+    const { quizType, quizDate, dailyLeaderboardDate, userName, totalScore } = req.body;
   
     try {
       const leaderboardEntry = new Leaderboard({
         quizType,
         quizDate,
-        dateQuizTaken,
+        dailyLeaderboardDate,
         userName,
         totalScore,
       });
@@ -42,15 +42,16 @@ app.post('/leaderboard', async (req, res) => {
     }
   });
 
-  app.get('/leaderboard', async (req, res) => {
-    try {
-      const { quizType, quizDate, dateQuizTaken } = req.query;
-      const leaderboardData = await Leaderboard.find({ quizType, quizDate, dateQuizTaken });
-      res.status(200).json(leaderboardData);
-    } catch (error) {
-      console.error('Error retrieving leaderboard data:', error);
-      res.status(500).send('Internal Server Error');
-    }
+app.get('/leaderboard', async (req, res) => {
+  try {
+    const { quizType, quizDate, dailyLeaderboardDate } = req.query;
+    const questionsData = await Question.find({ quizType, quizDate, dailyLeaderboardDate });
+    res.status(200).json(questionsData);
+    console.log(dailyLeaderboardDate)
+  } catch (error) {
+    console.error('Error retrieving questions data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 app.post('/questions', async (req, res) => {
