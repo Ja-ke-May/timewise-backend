@@ -49,7 +49,7 @@ app.get('/leaderboard', async (req, res) => {
     let leaderboardData;
 
     if (dateQuizTaken) {
-      leaderboardData = await Leaderboard.find({ quizType, quizDate, dateQuizTaken });
+      leaderboardData = await Leaderboard.find({ quizType, dateQuizTaken });
     } else if (quizDate) {
       leaderboardData = await Leaderboard.find({ quizType, quizDate });
     } else {
@@ -62,7 +62,6 @@ app.get('/leaderboard', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 app.post('/questions', async (req, res) => {
     const { quizType, quizDate, question, options, correctAnswer } = req.body;
